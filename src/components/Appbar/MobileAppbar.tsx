@@ -16,6 +16,7 @@ import AppbarMenu from "../Menu/Menu";
 import { ColorModeContext } from "@/pages/_app";
 import { Menu } from "@mui/icons-material";
 import SwipeableEdgeDrawer from "../Drawer/SwipeableDrawer";
+import SideDrawer from "../Drawer/SideDrawer";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -42,6 +43,7 @@ const StyledInputBase = styled(InputBase)(() => ({
 export default function MobileAppbar() {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down("sm"));
+	const matches2 = useMediaQuery(theme.breakpoints.up("sm"));
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" color="transparent">
@@ -85,7 +87,10 @@ export default function MobileAppbar() {
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			<SwipeableEdgeDrawer />
+			{!matches2 ? 
+				<SwipeableEdgeDrawer /> :
+				<SideDrawer />
+			}
 		</Box>
 	);
 }
