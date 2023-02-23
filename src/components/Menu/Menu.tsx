@@ -1,6 +1,6 @@
 import { AppbarMenuProps } from "@/interfaces/Props";
-import { Collections, InsertPhoto, Logout, PersonAdd, Settings, SupervisedUserCircle } from "@mui/icons-material";
-import { Avatar, Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { Collections, InsertPhoto, Settings, SupervisedUserCircle } from "@mui/icons-material";
+import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 
 export default function AppbarMenu({anchorEl, setAnchorEl}: AppbarMenuProps) {
