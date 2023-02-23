@@ -8,6 +8,9 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import { Brightness4Rounded, Collections, GitHub, InsertPhoto, SupervisedUserCircle } from "@mui/icons-material";
+import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
+import { AppbarDrawerProps } from "@/interfaces/Props";
 
 const drawerBleeding = 56;
 
@@ -39,12 +42,11 @@ const Puller = styled(Box)(({ theme }) => ({
 	left: "calc(50% - 15px)",
 }));
 
-export default function SwipeableEdgeDrawer(props: Props) {
+export default function SwipeableEdgeDrawer({drawerOpen, setDrawerOpen}: AppbarDrawerProps, props: Props) {
 	const { window } = props;
-	const [open, setOpen] = React.useState(false);
 
 	const toggleDrawer = (newOpen: boolean) => () => {
-		setOpen(newOpen);
+		setDrawerOpen(newOpen);
 	};
 
 	// This is used only for the example
@@ -61,13 +63,10 @@ export default function SwipeableEdgeDrawer(props: Props) {
 					},
 				}}
 			/>
-			<Box sx={{ textAlign: "center", pt: 1 }}>
-				<Button onClick={toggleDrawer(true)}>Open</Button>
-			</Box>
 			<SwipeableDrawer
 				container={container}
 				anchor="bottom"
-				open={open}
+				open={drawerOpen}
 				onClose={toggleDrawer(false)}
 				onOpen={toggleDrawer(true)}
 				swipeAreaWidth={drawerBleeding}
@@ -98,7 +97,49 @@ export default function SwipeableEdgeDrawer(props: Props) {
 						overflow: "auto",
 					}}
 				>
-					<Skeleton variant="rectangular" height="100%" />
+					<List>
+						<ListItem>
+							<ListItemButton>
+								<ListItemIcon>
+									<InsertPhoto /> 
+								</ListItemIcon>
+								<ListItemText primary={"Photos"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton>
+								<ListItemIcon>
+									<Collections /> 
+								</ListItemIcon>
+								<ListItemText primary={"Collections"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton>
+								<ListItemIcon>
+									<SupervisedUserCircle /> 
+								</ListItemIcon>
+								<ListItemText primary={"Users"} />
+							</ListItemButton>
+						</ListItem>
+						<Divider />
+						<ListItem>
+							<ListItemButton>
+								<ListItemIcon>
+									<Brightness4Rounded />
+								</ListItemIcon>
+								<ListItemText primary={"Light mode"} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton>
+								<ListItemIcon>
+									<GitHub />
+								</ListItemIcon>
+								<ListItemText primary={"Github"} />
+							</ListItemButton>
+						</ListItem>
+					</List>
 				</StyledBox>
 			</SwipeableDrawer>
 		</Root>

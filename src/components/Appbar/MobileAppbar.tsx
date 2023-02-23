@@ -21,7 +21,7 @@ const Search = styled("div")(({ theme }) => ({
 	},
 	marginRight: theme.spacing(2),
 	marginLeft: 0,
-	width: "90%"
+	width: "90%",
 }));
 
 const StyledInputBase = styled(InputBase)(() => ({
@@ -37,53 +37,60 @@ export default function MobileAppbar() {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down("sm"));
 	const matches2 = useMediaQuery(theme.breakpoints.up("sm"));
+	const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+	const handleDrawerClick = () => {
+		setDrawerOpen(!drawerOpen);
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" color="transparent">
-				<Toolbar sx={{display: "flex", flexDirection: "space-between"}}>
-					{
-						matches ?
-							<Typography
-								variant="h4"
-								fontWeight="bold"
-								noWrap
-								component="div"
-								color="secondary"
-								margin={2}
-								width="50px"
-							>
-						P
-							</Typography>
-							:
-							<Typography
-								variant="h4"
-								fontWeight="bold"
-								noWrap
-								component="div"
-								color="secondary"
-								width="200px"
-							>
-						Pickbook
-							</Typography>
-					}
+				<Toolbar sx={{ display: "flex", flexDirection: "space-between" }}>
+					{matches ? (
+						<Typography
+							variant="h4"
+							fontWeight="bold"
+							noWrap
+							component="div"
+							color="secondary"
+							margin={2}
+							width="50px"
+						>
+              P
+						</Typography>
+					) : (
+						<Typography
+							variant="h4"
+							fontWeight="bold"
+							noWrap
+							component="div"
+							color="secondary"
+							width="200px"
+						>
+              Pickbook
+						</Typography>
+					)}
 					<Search>
 						<StyledInputBase
 							placeholder="Search…"
 							inputProps={{ "aria-label": "search" }}
 						/>
-						<IconButton type="button" sx={{ p: "10px" }} aria-label="search" disableRipple={true}>
+						<IconButton
+							type="button"
+							sx={{ p: "10px" }}
+							aria-label="search"
+							disableRipple={true}
+						>
 							<SearchIcon />
 						</IconButton>
 					</Search>
-					<IconButton>
+					<IconButton onClick={handleDrawerClick}>
 						<Menu />
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			{!matches2 ? 
-				<SwipeableEdgeDrawer /> :
-				<SideDrawer />
-			}
+			{!matches2 ? <SwipeableEdgeDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/> : <SideDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>}
 		</Box>
 	);
 }

@@ -1,6 +1,6 @@
 import { AppbarMenuProps } from "@/interfaces/Props";
 import { Collections, InsertPhoto, Settings, SupervisedUserCircle } from "@mui/icons-material";
-import { Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
+import { Divider, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import React from "react";
 
 export default function AppbarMenu({anchorEl, setAnchorEl}: AppbarMenuProps) {
@@ -49,26 +49,26 @@ export default function AppbarMenu({anchorEl, setAnchorEl}: AppbarMenuProps) {
 				<ListItemIcon>
 					<InsertPhoto /> 
 				</ListItemIcon>
-				Photos
+				<ListItemText primary={"Photos"} />
 			</MenuItem>
 			<MenuItem onClick={handleClose}>
 				<ListItemIcon>
 					<Collections /> 
 				</ListItemIcon>
-				Collections
+				<ListItemText primary={"Collections"} />
 			</MenuItem>
 			<MenuItem onClick={handleClose}>
 				<ListItemIcon>
 					<SupervisedUserCircle /> 
 				</ListItemIcon>
-				Users
+				<ListItemText primary={"Users"} />
 			</MenuItem>
 			<Divider />
 			<MenuItem onClick={handleClose}>
 				<ListItemIcon>
 					<Settings fontSize="small" />
 				</ListItemIcon>
-          Unsplash API
+				<ListItemText primary={"Unsplash APIs"} />
 			</MenuItem>
 		</Menu>
 	);
