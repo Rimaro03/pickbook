@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import React from "react";
-import Appbar from "src/components/Appbar/Appbar";
+import Appbar from "@/components/Appbar/Appbar";
 
 export default function Home() {
 	return (
