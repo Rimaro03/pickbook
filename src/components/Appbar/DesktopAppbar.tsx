@@ -1,39 +1,40 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { IconButton, useTheme } from "@mui/material";
-import { useState } from "react";
-import AppbarMenu from "../Menu/Menu";
-import { ColorModeContext } from "@/pages/_app";
+import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { IconButton, useTheme } from '@mui/material';
+import { useState } from 'react';
+import AppbarMenu from '../Menu/Menu';
+import { ColorModeContext } from '@/pages/_app';
+import { useRouter } from 'next/router';
 
-const Search = styled("div")(({ theme }) => ({
-	position: "relative",
-	display: "flex",
+const Search = styled('div')(({ theme }) => ({
+	position: 'relative',
+	display: 'flex',
 	borderRadius: theme.shape.borderRadius,
 	backgroundColor: alpha(theme.palette.text.primary, 0.15),
-	"&:hover": {
+	'&:hover': {
 		backgroundColor: alpha(theme.palette.text.primary, 0.25),
 	},
 	marginRight: theme.spacing(2),
 	marginLeft: 0,
-	width: "50%",
+	width: '50%',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-	color: "inherit",
+	color: 'inherit',
 	flex: 1,
 	margin: 6,
 	marginLeft: 20,
-	width: "100%",
+	width: '100%',
 }));
 
 const AppbarElement = styled(Typography)(()=>({
@@ -42,11 +43,11 @@ const AppbarElement = styled(Typography)(()=>({
 }));
 
 const AppbarElementContainer = styled(Box)(()=>({
-	display: "flex",
-	margin: "auto",
-	alignItems: "center",
-	":hover": {
-		cursor: "pointer"
+	display: 'flex',
+	margin: 'auto',
+	alignItems: 'center',
+	':hover': {
+		cursor: 'pointer'
 	}
 }));
 
@@ -56,20 +57,33 @@ export default function DesktopAppbar() {
 	const theme = useTheme();
 	const colorMode = React.useContext(ColorModeContext);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [mode, setMode] = useState('dark');
+	const router = useRouter();
+
 	const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
+	const handleThemeModeChange = () => {
+		colorMode.toggleColorMode();
+		mode == 'light' ? setMode('dark') : setMode('light');
+	};
+
+	const handleGithub = () => {
+		router.push(new URL('https://www.github.com/Rimaro03/pickbook'));
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" color="transparent">
-				<Toolbar sx={{justifyContent: "space-between"}}>
+				<Toolbar sx={{justifyContent: 'space-between'}}>
 					<Typography
 						variant="h4"
 						fontWeight="bold"
 						noWrap
 						component="div"
 						color="secondary"
-						sx={{ display: { xs: "none", sm: "block" } }}
+						sx={{ display: { xs: 'none', sm: 'block' } }}
 						width="200px"
 					>
 						Pickbook
@@ -77,27 +91,27 @@ export default function DesktopAppbar() {
 					<Search>
 						<StyledInputBase
 							placeholder="Search…"
-							inputProps={{ "aria-label": "search" }}
+							inputProps={{ 'aria-label': 'search' }}
 						/>
-						<IconButton type="button" sx={{ p: "10px" }} aria-label="search" disableRipple={true}>
+						<IconButton type="button" sx={{ p: '10px' }} aria-label="search" disableRipple={true}>
 							<SearchIcon />
 						</IconButton>
 					</Search>
-					<Box sx={{ display: "flex", justifyContent: "space-between", width: "350px" }} >
+					<Box sx={{ display: 'flex', justifyContent: 'space-between', width: '350px' }} >
 						<AppbarElementContainer onMouseEnter={handleMouseEnter}>
 							<AppbarElement>Explore</AppbarElement>
 							{anchorEl ? 
 								<KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
 							}
 						</AppbarElementContainer>
-						<AppbarElementContainer onClick={colorMode.toggleColorMode}>
-							<AppbarElement>{theme.palette.mode} mode</AppbarElement>
+						<AppbarElementContainer onClick={handleThemeModeChange}>
+							<AppbarElement>{mode === 'dark' ? 'light' : 'dark'}</AppbarElement>
 							<IconButton sx={{ ml: 1 }} color="inherit">
-								{theme.palette.mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+								{mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
 							</IconButton>
 						</AppbarElementContainer >
-						<AppbarElementContainer sx={{backgroundColor: theme.palette.secondary.main, padding: 1, ml: 0.5, borderRadius: 2}}>
-							<Typography color={"white"}>GitHub</Typography>
+						<AppbarElementContainer onClick={handleGithub} sx={{backgroundColor: theme.palette.secondary.main, padding: 1, ml: 0.5, borderRadius: 2}}>
+							<Typography color={'white'}>GitHub</Typography>
 						</AppbarElementContainer>
 					</Box>
 					<AppbarMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
